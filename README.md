@@ -100,7 +100,7 @@ airflow dags trigger mermaid_etl_pipeline
 ## Pipeline Details
 
 ### MERMAID Pipeline
-Extracts data from the DataMermaid API for projects tagged with 'Rare'. Processes three types of surveys: fish, coral, and photo quadrat.
+Extracts data from the DataMermaid API for projects tagged with 'Org'. Processes three types of surveys: fish, coral, and photo quadrat.
 
 ### OurFish Pipeline
 Transfers catch data from the OurFish production PostgreSQL database on AWS RDS to a DigitalOcean managed PostgreSQL database. Data passes through CSV files and XCom between tasks.

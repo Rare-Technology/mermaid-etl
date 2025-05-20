@@ -78,7 +78,7 @@ airflow dags trigger mermaid_etl_pipeline
 
 ## Features
 
-- **Automated Project Discovery:** Fetches MERMAID project IDs from the DataMermaid API using the "Rare" tag
+- **Automated Project Discovery:** Fetches MERMAID project IDs from the DataMermaid API using the "Org" tag
 - **Parallel Data Processing:** Handles multiple projects in parallel for fish, coral, and photo quadrat surveys
 - **Data Integrity:** Prevents duplicate imports and ensures robust type conversions (datetime, UUID, numeric)
 - **Performance:** Chunked processing and bulk inserts for large datasets

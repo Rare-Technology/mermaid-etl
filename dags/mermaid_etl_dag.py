@@ -18,9 +18,12 @@ from utils.mermaid_utils import (
 )
 from config.mermaid_config import DatabaseConfig
 
-def get_rare_project_ids() -> list:
-    """Fetch project IDs from Mermaid API with Rare tag"""
-    url = "https://api.datamermaid.org/v1/projects/?showall=true&tags=Rare"
+def get_org_project_ids() -> list:
+    """
+    Fetch project IDs from Mermaid API with a specific organization tag.
+    NOTE: Change the 'org' tag in the URL below to the name of your organization.
+    """
+    url = "https://api.datamermaid.org/v1/projects/?showall=true&tags=org"  # <-- Change 'org' to your organization's name
     try:
         response = requests.get(url)
         response.raise_for_status()

@@ -18,6 +18,20 @@ mermaid-etl/
 └── README.md
 ```
 
+## Data Sources
+
+This pipeline currently extracts data from the following public endpoints:
+
+- `FISH_SURVEY_ENDPOINT = "beltfishes/obstransectbeltfishes"`
+- `CORAL_SURVEY_ENDPOINT = "benthicpits/obstransectbenthicpits"`
+- `PHOTO_QUADRAT_ENDPOINT = "benthicpqts/obstransectbenthicpqts"`
+
+More endpoints will be added soon.
+
+## Database Schema
+
+This pipeline automatically creates the required table structures in your PostgreSQL database. By default, it assumes there is a schema called `mermaid_source`. You can change the schema name by editing the `schema` attribute in `config/mermaid_config.py`.
+
 ## Setup
 
 1. **Clone the repository:**

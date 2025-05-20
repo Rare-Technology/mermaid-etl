@@ -1,0 +1,19 @@
+# Apache Airflow and its dependencies
+apache-airflow>=2.7.0
+apache-airflow-providers-postgres>=5.6.0
+apache-airflow-providers-email>=3.3.0
+
+# Data processing and database
+pandas>=2.0.0
+requests>=2.31.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+pyarrow>=14.0.0  # Required for parquet file support
+
+# Type checking
+typing-extensions>=4.7.0
+
+# Optional but recommended for development
+pytest>=7.4.0
+black>=23.7.0
+flake8>=6.1.0 

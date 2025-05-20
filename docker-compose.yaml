@@ -1,0 +1,60 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    networks:
+      - airflow-network
+
+  webserver:
+    image: apache/airflow:2.7.1
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+      - AIRFLOW__WEBSERVER__SECRET_KEY=your-very-own-secret-key
+      - AIRFLOW__WEBSERVER__WORKERS=1
+      - PYTHONPATH=/opt/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./config:/opt/airflow/config
+      - ./utils:/opt/airflow/utils
+    ports:
+      - "8080:8080"
+    networks:
+      - airflow-network
+    command: bash -c "airflow db migrate && 
+      PGPASSWORD=airflow psql -h postgres -U airflow -d airflow -c 'CREATE SCHEMA IF NOT EXISTS mermaid_source' &&
+      airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com && 
+      airflow webserver"
+
+  scheduler:
+    image: apache/airflow:2.7.1
+    restart: always
+    depends_on:
+      - webserver
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+      - AIRFLOW__WEBSERVER__SECRET_KEY=your-very-own-secret-key
+      - PYTHONPATH=/opt/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./config:/opt/airflow/config
+      - ./utils:/opt/airflow/utils
+    networks:
+      - airflow-network
+    command: airflow scheduler
+
+networks:
+  airflow-network:
+    driver: bridge 
